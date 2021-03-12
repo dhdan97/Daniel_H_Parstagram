@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etDescription;
     private Button btnCaptureImage;
+    private Button btnSignout;
     private ImageView ivPostImage;
     private Button btnSubmit;
     private File photoFile;
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
+        btnSignout = findViewById(R.id.btnSignout);
+
+        btnSignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signout();
+            }
+        });
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 savePost(description, currentUser, photoFile);
             }
         });
+    }
+
+    private void signout() {
+        ParseUser.logOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void launchCamera() {
